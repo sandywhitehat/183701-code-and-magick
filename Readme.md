@@ -1,7 +1,7 @@
-# Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
+﻿# Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Игорь Самохвалов](https://up.htmlacademy.ru/javascript/5/user/183701).
-* Наставник: `Неизвестно`.
+* Наставник: `Дмитрий Безверхий`.
 
 ---
 
