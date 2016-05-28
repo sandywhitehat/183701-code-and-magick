@@ -10,14 +10,14 @@ if ( typeof a === 'boolean'){
 else if ( typeof a === 'number'){
       return 'Я прыгнул на ' + a*100 + ' сантиметров';
 }
-else if ( Array.isArray(a), !Array.isArray(b)){
+else if ( (Array.isArray(a)) && (!Array.isArray(b)) ){
   var arrayNumber = 0;
   for (var i = 0; i < a.length; i++) {
     arrayNumber += a[i];
   }
       return 'Я прошёл '+ arrayNumber + ' шагов';
 }
-else if ( Array.isArray(a), Array.isArray(b)){
+else if ( (Array.isArray(a)) && (Array.isArray(b)) ){
   var arrayMultiplication = 0;
   for (var i = 0; i < a.length; i++) {
     arrayMultiplication += a[i] * b[i];
@@ -25,4 +25,3 @@ else if ( Array.isArray(a), Array.isArray(b)){
       return 'Я прошёл ' + arrayMultiplication + ' метров';
 }
 }
-getMessage();
