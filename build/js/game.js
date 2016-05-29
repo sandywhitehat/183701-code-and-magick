@@ -380,16 +380,88 @@
     _drawPauseScreen: function() {
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+
+ctx.fillStyle ='rgba(0, 0, 0, 0.7)';
+ctx.fillRect(230, 50, 250, 110);
+
+ctx.fillStyle ='#FFFFFF';
+ctx.fillRect(220, 40, 240, 100);
+
+ctx.fillStyle ='black';
+ctx.font = '16px PT Mono';
+ctx.textBaseline = 'hanging';
+ctx.fillText('Вы победили!', 280, 60);
           break;
+
         case Verdict.FAIL:
-          console.log('you have failed!');
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+
+ctx.fillStyle ='rgba(0, 0, 0, 0.7)';
+ctx.fillRect(230, 50, 250, 110);
+
+ctx.fillStyle ='#FFFFFF';
+ctx.fillRect(220, 40, 240, 100);
+
+ctx.fillStyle ='black';
+ctx.font = '16px PT Mono';
+ctx.textBaseline = 'hanging';
+ctx.fillText('Вы проиграли!', 280, 60);
           break;
+
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+
+ctx.fillStyle ='rgba(0, 0, 0, 0.7)';
+ctx.fillRect(230, 50, 310, 110);
+
+ctx.fillStyle ='#FFFFFF';
+ctx.fillRect(220, 40, 300, 100);
+
+ctx.fillStyle ='black';
+ctx.font = '16px PT Mono';
+ctx.textBaseline = 'hanging';
+ctx.fillText('Игра поставлена на паузу.', 250, 60);
+ctx.fillText('Нажмите "пробел" для ', 250, 80);
+ctx.fillText('продолжения.', 250, 100);
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+ctx.fillStyle ='rgba(0, 0, 0, 0.7)';
+ctx.beginPath();
+  ctx.moveTo(310, 220);
+  ctx.lineTo(350, 190);
+  ctx.lineTo(600, 190);
+  ctx.lineTo(600, 110);
+  ctx.lineTo(290, 110);
+  ctx.lineTo(290, 190);
+  ctx.lineTo(325, 190);
+  ctx.lineTo(310, 220);
+  ctx.stroke();
+  ctx.fill();
+
+ctx.fillStyle ='white';
+ctx.beginPath();
+  ctx.moveTo(300, 210);
+  ctx.lineTo(340, 180);
+  ctx.lineTo(590, 180);
+  ctx.lineTo(590, 100);
+  ctx.lineTo(280, 100);
+  ctx.lineTo(280, 180);
+  ctx.lineTo(315, 180);
+  ctx.lineTo(300, 210);
+  ctx.stroke();
+  ctx.fill();
+
+ctx.fillStyle ='black';
+ctx.font = '16px PT Mono';
+ctx.textBaseline = 'hanging';
+ctx.fillText('Добро пожаловать в игру!', 300, 120);
+ctx.fillText('Нажмите "пробел" для старта.', 300, 140);
           break;
       }
     },
