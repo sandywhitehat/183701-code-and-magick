@@ -383,16 +383,16 @@
           var canvas = document.querySelector('canvas');
           var ctx = canvas.getContext('2d');
 
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-                    ctx.fillRect(230, 50, 250, 110);
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          ctx.fillRect(230, 50, 250, 110);
 
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillRect(220, 40, 240, 100);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(220, 40, 240, 100);
 
-                    ctx.fillStyle ='black';
-                    ctx.font = '16px PT Mono';
-                    ctx.textBaseline = 'hanging';
-                    ctx.fillText('Вы победили!', 280, 60);
+          ctx.fillStyle = 'black';
+          ctx.font = '16px PT Mono';
+          ctx.textBaseline = 'hanging';
+          ctx.fillText('Вы победили!', 280, 60);
           break;
 
         case Verdict.FAIL:
