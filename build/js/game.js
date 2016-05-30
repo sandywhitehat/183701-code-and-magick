@@ -378,10 +378,10 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var canvas = document.querySelector('canvas');
+      var ctx = canvas.getContext('2d');
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          var canvas = document.querySelector('canvas');
-          var ctx = canvas.getContext('2d');
 
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.fillRect(230, 50, 250, 110);
@@ -396,6 +396,7 @@
           break;
 
         case Verdict.FAIL:
+
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.fillRect(230, 50, 250, 110);
 
@@ -409,6 +410,7 @@
           break;
 
         case Verdict.PAUSE:
+
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.fillRect(230, 50, 310, 110);
 
@@ -424,6 +426,7 @@
           break;
 
         case Verdict.INTRO:
+
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.beginPath();
           ctx.moveTo(310, 220);
