@@ -380,84 +380,56 @@
     _drawPauseScreen: function() {
       var canvas = document.querySelector('canvas');
       var ctx = canvas.getContext('2d');
+      function drawLines() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(230, 50, 250, 110);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(220, 40, 240, 100);
+      }
+      function writeText(string, x, y) {
+        ctx.fillStyle = 'black';
+        ctx.font = '16px PT Mono';
+        ctx.textBaseline = 'hanging';
+        ctx.fillText(string, x, y);
+      }
+
+      function drawBubble(color, offset) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(310 - offset, 220 - offset);
+        ctx.lineTo(350 - offset, 190 - offset);
+        ctx.lineTo(600 - offset, 190 - offset);
+        ctx.lineTo(600 - offset, 110 - offset);
+        ctx.lineTo(290 - offset, 110 - offset);
+        ctx.lineTo(290 - offset, 190 - offset);
+        ctx.lineTo(325 - offset, 190 - offset);
+        ctx.lineTo(310 - offset, 220 - offset);
+        ctx.stroke();
+        ctx.fill();
+      }
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          ctx.fillRect(230, 50, 250, 110);
-
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillRect(220, 40, 240, 100);
-
-          ctx.fillStyle = 'black';
-          ctx.font = '16px PT Mono';
-          ctx.textBaseline = 'hanging';
-          ctx.fillText('Вы победили!', 280, 60);
+          drawLines();
+          writeText('Вы победили!', 280, 60);
           break;
 
         case Verdict.FAIL:
-
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          ctx.fillRect(230, 50, 250, 110);
-
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillRect(220, 40, 240, 100);
-
-          ctx.fillStyle = 'black';
-          ctx.font = '16px PT Mono';
-          ctx.textBaseline = 'hanging';
-          ctx.fillText('Вы проиграли!', 280, 60);
+          drawLines();
+          writeText('Вы проиграли!', 280, 60);
           break;
 
         case Verdict.PAUSE:
-
           ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
           ctx.fillRect(230, 50, 310, 110);
-
           ctx.fillStyle = '#FFFFFF';
           ctx.fillRect(220, 40, 300, 100);
-
-          ctx.fillStyle = 'black';
-          ctx.font = '16px PT Mono';
-          ctx.textBaseline = 'hanging';
-          ctx.fillText('Игра поставлена на паузу.', 250, 60);
-          ctx.fillText('Нажмите "пробел" для ', 250, 80);
-          ctx.fillText('продолжения.', 250, 100);
+          writeText('Игра поставлена на паузу. Нажмите "пробел" для продолжения.', 250, 60);
           break;
 
         case Verdict.INTRO:
-
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          ctx.beginPath();
-          ctx.moveTo(310, 220);
-          ctx.lineTo(350, 190);
-          ctx.lineTo(600, 190);
-          ctx.lineTo(600, 110);
-          ctx.lineTo(290, 110);
-          ctx.lineTo(290, 190);
-          ctx.lineTo(325, 190);
-          ctx.lineTo(310, 220);
-          ctx.stroke();
-          ctx.fill();
-
-          ctx.fillStyle = 'white';
-          ctx.beginPath();
-          ctx.moveTo(300, 210);
-          ctx.lineTo(340, 180);
-          ctx.lineTo(590, 180);
-          ctx.lineTo(590, 100);
-          ctx.lineTo(280, 100);
-          ctx.lineTo(280, 180);
-          ctx.lineTo(315, 180);
-          ctx.lineTo(300, 210);
-          ctx.stroke();
-          ctx.fill();
-
-          ctx.fillStyle = 'black';
-          ctx.font = '16px PT Mono';
-          ctx.textBaseline = 'hanging';
-          ctx.fillText('Добро пожаловать в игру!', 300, 120);
-          ctx.fillText('Нажмите "пробел" для старта.', 300, 140);
+          drawBubble('rgba(0, 0, 0, 0.7)', 0);
+          drawBubble('white', 10);
+          writeText('Добро пожаловать в игру! Нажмите "пробел" для старта.', 300, 120);
           break;
       }
     },
