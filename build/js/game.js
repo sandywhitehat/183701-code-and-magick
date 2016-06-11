@@ -378,18 +378,58 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var canvas = document.querySelector('canvas');
+      var ctx = canvas.getContext('2d');
+      function drawLines() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(230, 50, 250, 110);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(220, 40, 240, 100);
+      }
+      function writeText(string, x, y) {
+        ctx.fillStyle = 'black';
+        ctx.font = '16px PT Mono';
+        ctx.textBaseline = 'hanging';
+        ctx.fillText(string, x, y);
+      }
+
+      function drawBubble(color, offset) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(310 - offset, 220 - offset);
+        ctx.lineTo(350 - offset, 190 - offset);
+        ctx.lineTo(600 - offset, 190 - offset);
+        ctx.lineTo(600 - offset, 110 - offset);
+        ctx.lineTo(290 - offset, 110 - offset);
+        ctx.lineTo(290 - offset, 190 - offset);
+        ctx.lineTo(325 - offset, 190 - offset);
+        ctx.lineTo(310 - offset, 220 - offset);
+        ctx.stroke();
+        ctx.fill();
+      }
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          drawLines();
+          writeText('Вы победили!', 280, 60);
           break;
+
         case Verdict.FAIL:
-          console.log('you have failed!');
+          drawLines();
+          writeText('Вы проиграли!', 280, 60);
           break;
+
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          ctx.fillRect(230, 50, 310, 110);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(220, 40, 300, 100);
+          writeText('Игра поставлена на паузу. Нажмите "пробел" для продолжения.', 250, 60);
           break;
+
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          drawBubble('rgba(0, 0, 0, 0.7)', 0);
+          drawBubble('white', 10);
+          writeText('Добро пожаловать в игру! Нажмите "пробел" для старта.', 300, 120);
           break;
       }
     },
