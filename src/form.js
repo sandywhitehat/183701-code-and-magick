@@ -26,24 +26,19 @@ var link2 = document.getElementsByClassName('review-fields-text');
 var submit = document.getElementsByClassName('review-submit');
 submit[0].setAttribute('disabled', '');
 function checkValidity() {
+  if ((reviewNameField.value !== '' && (rate[2].checked || rate[3].checked || rate[4].checked)) || ((rate[1].checked || rate[0].checked) && reviewTextField.value !== '')) {
   submit[0].removeAttribute('disabled', '');
 }
+}
 reviewNameField.oninput = function() {
-
+  checkValidity();
   if (reviewNameField.value === '') {
     reviewNameField.setAttribute('required', '');
     link1[0].classList.remove('invisible');
     lable1[0].classList.remove('invisible');
     return false;
-  } else if (!(reviewNameField.value === '') && !(reviewTextField.value === '')) {
-    checkValidity();
+  } else if (reviewNameField.value !== '' && reviewTextField.value !== '') {
     lable1[0].classList.add('invisible');
-    return true;
-  } else if ((rate[2].checked || rate[3].checked || rate[4].checked) && !(reviewNameField.value === '')) {
-    checkValidity();
-    reviewTextField.removeAttribute('required', '');
-    link2[0].classList.remove('invisible');
-    lable1[0].classList.remove('invisible');
     return true;
   } else {
     link1[0].classList.add('invisible');
@@ -52,16 +47,16 @@ reviewNameField.oninput = function() {
 };
 
 reviewTextField.oninput = function() {
+  checkValidity();
   if ((rate[1].checked || rate[0].checked) && reviewTextField.value === '') {
     reviewTextField.setAttribute('required', '');
     link2[0].classList.remove('invisible');
     lable1[0].classList.remove('invisible');
     return false;
-  } else if (!(reviewNameField.value === '') && !(reviewTextField.value === '')) {
-    checkValidity();
+  } else if (reviewNameField.value !== '' && reviewTextField.value !== '') {
     lable1[0].classList.add('invisible');
     return true;
-  } else if ((rate[2].checked || rate[3].checked || rate[4].checked) && (reviewTextField.value === '')) {
+  } else if ((rate[2].checked || rate[3].checked || rate[4].checked)) {
     link2[0].classList.add('invisible');
   } else {
     link2[0].classList.add('invisible');
