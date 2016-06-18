@@ -27,8 +27,8 @@ var submit = document.getElementsByClassName('review-submit');
 submit[0].setAttribute('disabled', '');
 function checkValidity() {
   if ((reviewNameField.value !== '' && (rate[2].checked || rate[3].checked || rate[4].checked)) || ((rate[1].checked || rate[0].checked) && reviewTextField.value !== '')) {
-  submit[0].removeAttribute('disabled', '');
-}
+    submit[0].removeAttribute('disabled', '');
+  }
 }
 reviewNameField.oninput = function() {
   checkValidity();
