@@ -96,7 +96,7 @@ function findRate() {
 }
 
 
-
+rate[(browserCookies.get('mark')) - 1].setAttribute('checked', '');
 reviewNameField.value = browserCookies.get('username') || '';
 
 reviewForm.onsubmit = function(evt) {
