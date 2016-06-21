@@ -102,8 +102,7 @@ reviewNameField.value = browserCookies.get('username') || '';
 reviewForm.onsubmit = function(evt) {
   evt.preventDefault();
   var dateToExpire = +Date.now() + getExpireMs();
-  var formattedDateToExpire = new Date(dateToExpire).toUTCString();
-  document.cookie = 'username=' + reviewNameField.value + ';expires=' + formattedDateToExpire;
-  document.cookie = 'mark=' + findRate().value + ';expires=' + formattedDateToExpire;
+  browserCookies.set('username', reviewNameField.value, {expires: dateToExpire});
+  browserCookies.set('mark', findRate().value, {expires: dateToExpire});
   this.submit();
 };
