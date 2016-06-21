@@ -19,11 +19,11 @@
 var reviewNameField = document.getElementById('review-name');
 var reviewTextField = document.getElementById('review-text');
 var rate = document.getElementsByName('review-mark');
-
 var lable1 = document.getElementsByClassName('review-fields');
 var link1 = document.getElementsByClassName('review-fields-name');
 var link2 = document.getElementsByClassName('review-fields-text');
 var submit = document.getElementsByClassName('review-submit');
+
 submit[0].setAttribute('disabled', '');
 function checkValidity() {
   if ((reviewNameField.value !== '' && (rate[2].checked || rate[3].checked || rate[4].checked)) || ((rate[1].checked || rate[0].checked) && reviewTextField.value !== '')) {
@@ -72,4 +72,37 @@ submit.onclick = function(event) {
     return false;
   }
   return true;
+};
+
+var browserCookies = require('browser-cookies');
+var reviewForm = document.querySelector('.review-form');
+// блок для вычисления количества дней от прошедшего дня рождения
+var now = new Date();
+var birthday = new Date();
+birthday.setFullYear(now.getFullYear() - 1);
+birthday.setMonth(7);
+birthday.setDate(23);
+function getExpireMs() {
+  return (now - birthday);
+}
+// функция для нахождения выбранной оценки (возращает строку checked.инпута, у которой можно вычислить её value)
+function findRate() {
+  for ( var i = 0; i < 5; i++ ) {
+    if (rate[i].checked === true) {
+      var mark = rate[i];
+    }
+  }
+  return mark;
+}
+
+
+rate[(browserCookies.get('mark')) - 1].setAttribute('checked', '');
+reviewNameField.value = browserCookies.get('username') || '';
+
+reviewForm.onsubmit = function(evt) {
+  evt.preventDefault();
+  var dateToExpire = +Date.now() + getExpireMs();
+  browserCookies.set('username', reviewNameField.value, {expires: dateToExpire});
+  browserCookies.set('mark', findRate().value, {expires: dateToExpire});
+  this.submit();
 };
