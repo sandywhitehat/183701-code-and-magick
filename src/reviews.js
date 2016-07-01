@@ -67,10 +67,10 @@ var getReviewElement = function(data, container) {
 };
 
 /** @param {Array.<Object>} reviews */
-var renderReviews = function(reviews) {
+var renderReviews = function(reviewers) {
   reviewsContainer.innerHTML = '';
 
-  reviews.forEach(function(review) {
+  reviewers.forEach(function(review) {
     getReviewElement(review, reviewsContainer);
   });
 };
@@ -79,8 +79,8 @@ var renderReviews = function(reviews) {
  * @param {Array.<Object>} reviews
  * @param {Filter} filter
  */
-var getFilteredReviews = function(reviews, filter) {
-  var reviewsToFilter = reviews.slice(0);
+var getFilteredReviews = function(reviewers, filter) {
+  var reviewsToFilter = reviewers.slice(0);
 
   switch (filter) {
 
