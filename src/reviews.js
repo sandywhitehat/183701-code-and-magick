@@ -127,7 +127,7 @@ var getFilteredReviews = function(reviewers, filter) {
 
 /** @param {Filter} filter */
 var setFilterEnabled = function(filter) {
-  console.log('приходящий фильтр ' + filter);
+  //console.log('приходящий фильтр ' + filter);
   var filteredReviews = getFilteredReviews(reviews, filter);
   renderReviews(filteredReviews);
 };
@@ -144,7 +144,7 @@ var checkOnChecked = function() {
 };
 // мы находим элемент с нужным id и выделяем его
 var checkClickedInput = function(event) {
-  console.log('clicked');
+  //console.log('clicked');
   // присваиваем переменной того, по кому кликаем
   var lableClicked = event.target;
   var inputId = lableClicked.getAttribute('for');
