@@ -87,14 +87,13 @@ var getReviewElement = function(data, container) {
 var renderReviews = function(reviewers, page, replace) {
   moreReviews.classList.remove('invisible');
   reviewsContainer.innerHTML = '';
-  // вырезаем по 3 страницы
- if (replace ===  true) {
-   var from = page * PAGE_SIZE;
+  if (replace === true) {
+    var from = page * PAGE_SIZE;
     var to = from + PAGE_SIZE;
- } else {
-   from = 0;
-   to = (page * PAGE_SIZE) + PAGE_SIZE;
- }
+  } else {
+    from = 0;
+    to = (page * PAGE_SIZE) + PAGE_SIZE;
+  }
 
   reviewers.slice(from, to).forEach(function(review) {
     getReviewElement(review, reviewsContainer);
@@ -171,14 +170,14 @@ var checkOnChecked = function() {
 };
 // функции по избавлению от кнопки просмотра дополнительных рецензий
 // на первой странице
-var isLess = function(reviews, pageSize) {
-  return reviews.length <= pageSize;
-}
+var isLess = function(reviewers, pageSize) {
+  return reviewers.length <= pageSize;
+};
 var isLessThanLess = function() {
   if (isLess(filteredReviews, PAGE_SIZE)) {
-  moreReviews.classList.add('invisible');
+    moreReviews.classList.add('invisible');
+  }
 };
-}
 
 // мы находим элемент с нужным id и выделяем его
 var checkClickedInput = function(event) {
@@ -243,13 +242,13 @@ var getReviews = function(callback) {
  */
 
  // вычисляем доступна ли следующая страница
-var isNextPageAvailable = function(reviews, page, pageSize) {
+var isNextPageAvailable = function(reviewers, page, pageSize) {
   // 0 < x/3
   // 1 < x/3
   // 2 < x/3
   // 3 < 12/3
 
-  return page < (reviews.length / pageSize)-1;
+  return page < (reviewers.length / pageSize) - 1;
 };
 
 
