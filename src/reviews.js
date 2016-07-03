@@ -21,6 +21,15 @@ var REVIEWS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
 /** @type {Array.<Object>} */
 var reviews = [];
 
+/** @type {Array.<Object>} */
+var filteredReviews = [];
+
+/** @constant {number} */
+var PAGE_SIZE = 3;
+
+/** @type {number} */
+var pageNumber = 0;
+
 var Filter = {
   'ALL': 'reviews-all',
   'DATE': 'reviews-recent',
@@ -31,6 +40,7 @@ var Filter = {
 
 /** @constant {Filter} */
 var DEFAULT_FILTER = Filter.ALL;
+
 
 
 var setRating = function(number, container) {
@@ -66,11 +76,27 @@ var getReviewElement = function(data, container) {
   return element;
 };
 
-/** @param {Array.<Object>} reviews */
-var renderReviews = function(reviewers) {
-  reviewsContainer.innerHTML = '';
+/**
+ * @param {Array.<Object>} reviewers
+ * @param {number} page
+ */
 
-  reviewers.forEach(function(review) {
+
+// если replace true, то выводим от страницы page длиной с размером страниы
+// если false, то выводим страницы от 0й до page
+var renderReviews = function(reviewers, page, replace) {
+  moreReviews.classList.remove('invisible');
+  reviewsContainer.innerHTML = '';
+  // вырезаем по 3 страницы
+ if (replace ===  true) {
+   var from = page * PAGE_SIZE;
+    var to = from + PAGE_SIZE;
+ } else {
+   from = 0;
+   to = (page * PAGE_SIZE) + PAGE_SIZE;
+ }
+
+  reviewers.slice(from, to).forEach(function(review) {
     getReviewElement(review, reviewsContainer);
   });
 };
@@ -127,9 +153,10 @@ var getFilteredReviews = function(reviewers, filter) {
 
 /** @param {Filter} filter */
 var setFilterEnabled = function(filter) {
-  //console.log('приходящий фильтр ' + filter);
-  var filteredReviews = getFilteredReviews(reviews, filter);
-  renderReviews(filteredReviews);
+  console.log('приходящий фильтр ' + filter);
+  filteredReviews = getFilteredReviews(reviews, filter);
+  pageNumber = 0;
+  renderReviews(filteredReviews, pageNumber);
 };
   // пробегается по всем инпутам, находит выбранный и включает такой фильтр
 var checkOnChecked = function() {
@@ -142,6 +169,17 @@ var checkOnChecked = function() {
     }
   }
 };
+// функции по избавлению от кнопки просмотра дополнительных рецензий
+// на первой странице
+var isLess = function(reviews, pageSize) {
+  return reviews.length <= pageSize;
+}
+var isLessThanLess = function() {
+  if (isLess(filteredReviews, PAGE_SIZE)) {
+  moreReviews.classList.add('invisible');
+};
+}
+
 // мы находим элемент с нужным id и выделяем его
 var checkClickedInput = function(event) {
   //console.log('clicked');
@@ -151,8 +189,9 @@ var checkClickedInput = function(event) {
   cleanCheckedChecks();
   document.getElementById(inputId).setAttribute('checked', '');
   checkOnChecked();
-
+  isLessThanLess();
 };
+
 var cleanCheckedChecks = function() {
   //находим все инпуты с именем reviews
   var inputs = document.getElementsByName('reviews');
@@ -164,17 +203,16 @@ var cleanCheckedChecks = function() {
     currentInput.removeAttribute('checked', '');
   }
 };
-/** @param {boolean} enabled */
+
 var setFiltersListeners = function() {
   var filters = filtersContainer.querySelectorAll('.reviews-filter-item');
   //console.log(filters);
   for (var i = 0; i < filters.length; i++) {
     var filter = filters[i];
-    filter.onclick = checkClickedInput;
-
-
+    filter.addEventListener('click', checkClickedInput);
   }
 };
+
 
 /** @param {function(Array.<Object>)} callback */
 var getReviews = function(callback) {
@@ -196,6 +234,42 @@ var getReviews = function(callback) {
   xhr.open('GET', REVIEWS_LOAD_URL);
   xhr.send();
 };
+
+/**
+ * @param {Array} reviewers
+ * @param {number} page
+ * @param {number} pageSize
+ * @return {boolean}
+ */
+
+ // вычисляем доступна ли следующая страница
+var isNextPageAvailable = function(reviews, page, pageSize) {
+  // 0 < x/3
+  // 1 < x/3
+  // 2 < x/3
+  // 3 < 12/3
+
+  return page < (reviews.length / pageSize)-1;
+};
+
+
+var moreReviews = document.querySelector('.reviews-controls-more');
+
+
+
+// прописываем событие, при нажатии книпки
+moreReviews.onclick = function() {
+  pageNumber++;
+  renderReviews(filteredReviews, pageNumber, false);
+
+  console.log(pageNumber);
+// вынести в отдельную функцию, 2 раза
+//
+  if (!isNextPageAvailable(filteredReviews, pageNumber, PAGE_SIZE)) {
+    moreReviews.classList.add('invisible');
+  }
+};
+
 var getReviewsCallback = function(loadedData) {
   reviews = loadedData;
   setFiltersListeners(true);
