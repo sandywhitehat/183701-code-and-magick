@@ -423,13 +423,16 @@
           ctx.fillRect(230, 50, 310, 110);
           ctx.fillStyle = '#FFFFFF';
           ctx.fillRect(220, 40, 300, 100);
-          writeText('Игра поставлена на паузу. Нажмите "пробел" для продолжения.', 250, 60);
+          writeText('Игра поставлена на паузу.', 250, 60);
+          writeText('Нажмите "пробел" для', 250, 80);
+          writeText('продолжения.', 250, 100);
           break;
 
         case Verdict.INTRO:
           drawBubble('rgba(0, 0, 0, 0.7)', 0);
           drawBubble('white', 10);
-          writeText('Добро пожаловать в игру! Нажмите "пробел" для старта.', 300, 120);
+          writeText('Добро пожаловать в игру! Нажмите', 300, 120);
+          writeText('"пробел" для старта.', 300, 140);
           break;
       }
     },
@@ -724,4 +727,38 @@
   var game = new Game(document.querySelector('.demo'));
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
+  var clouds = document.querySelector('.header-clouds');
+  var isCloudsVisible = function() {
+    if (window.pageYOffset > 400) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  var THROTTLE_DELAY = 100;
+  // определили момент захода на сайт в милисекундах от 70 года
+  var lastCall = Date.now();
+  window.addEventListener('scroll', function() {
+  // отнимает от текущего времени время захода на сайт
+  // и если оно больше либо равно 100 мс
+  // то мы движем облаками
+//console.log(Date.now() - lastCall >= THROTTLE_DELAY);
+  // первый скролл  ластколл = 1400 дейтнау = 1500
+  // значение if = true
+  // ластколл = дейтнау = 1500
+  // второй скролл  дейтнау 1530 ластколл = 1500
+  // if = false
+  // третий скролл ластколл 1500 дейтнау = 1610
+  // if = true
+  // обновляем занчение ластколаа до дейтнау(1610) и двигаем облаака
+    if (Date.now() - lastCall >= THROTTLE_DELAY) {
+      lastCall = Date.now();
+      console.log('scroll' + Date.now());
+      if (isCloudsVisible()) {
+        clouds.style.backgroundPosition = window.pageYOffset + 'px 0px';
+      } else {
+        game.setGameStatus(Game.Verdict.PAUSE);
+      }
+    }
+  });
 })();

@@ -152,7 +152,7 @@ var getFilteredReviews = function(reviewers, filter) {
 
 /** @param {Filter} filter */
 var setFilterEnabled = function(filter) {
-  console.log('приходящий фильтр ' + filter);
+//  console.log('приходящий фильтр ' + filter);
   filteredReviews = getFilteredReviews(reviews, filter);
   pageNumber = 0;
   renderReviews(filteredReviews, pageNumber);
